@@ -97,7 +97,7 @@ const Home: React.FC = () => {
         />
         <PageAnchor
           text="currículo"
-          href="/resume"
+          href="/curriculum"
           icon={FaClipboardList}
           layoutId={'curriculum-title'}
         />
