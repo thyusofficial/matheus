@@ -4,7 +4,7 @@ const Resume: React.FC = () => {
   return (
     <section className="flex flex-col items-center min-h-custom-size">
       <motion.h1 layoutId={'resume-title'} transition={{ duration: 1 }}>
-        COMMING SOON
+        COMING SOON
       </motion.h1>
     </section>
   )
