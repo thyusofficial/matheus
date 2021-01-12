@@ -13,11 +13,11 @@ const SocialAnchor: React.FC<InputProps> = ({ to, icon: Icon }) => {
       href={to}
       target="_blank"
       rel="noreferrer"
-      className="rounded bg-shape text-primary p-3 hover:text-primary-hover hover:bg-shape-hover"
+      className="flex items-center justify-center rounded h-10 w-10 bg-shape text-primary hover:text-primary-hover hover:bg-shape-hover"
       whileHover={{ translateY: 5 }}
       transition={{ duration: 0.2 }}
     >
-      <Icon size={22} />
+      <Icon size={30} />
     </motion.a>
   )
 }

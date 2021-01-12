@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
   return (
     <AnimatePresence>
       <motion.footer
-        className="flex flex-col justify-center items-center space-y-1 py-2"
+        className="flex flex-col items-center justify-center h-20 md:h-10"
         key="defaul-footer"
         initial={{ y: '100%' }}
         animate={{ y: '0' }}
@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
         <p className="text-secondary text-lg tracking-wide">
           Desenvolvido por
           <a
-            className="text-green hover:text-primary transition-colors duration-200"
+            className="text-primary hover:text-green transition-colors duration-200"
             href="https://www.linkedin.com/in/thyus/"
             target="_blank"
             rel="noreferrer"

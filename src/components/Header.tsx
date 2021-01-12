@@ -13,7 +13,7 @@ import { motion } from 'framer-motion'
 const Header: React.FC = () => {
   return (
     <motion.header
-      className="flex justify-between items-center py-2"
+      className="flex justify-between items-center py-2 h-10 md:h-20"
       initial={{ y: '-100%' }}
       animate={{ y: '0' }}
       transition={{ duration: 0.5 }}

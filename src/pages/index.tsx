@@ -1,8 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import PageAnchor from '../components/PageAnchor'
-import { FaUser, FaClipboardList, FaLaptopCode } from 'react-icons/fa'
 import { motion, Variants } from 'framer-motion'
+import Link from 'next/link'
 
 const Home: React.FC = () => {
   const tech: Variants = {
@@ -17,26 +16,21 @@ const Home: React.FC = () => {
     }
   }
 
-  const pageAnchor: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 1
-      }
-    }
-  }
-
   return (
-    <section className="flex flex-col min-h-custom-mobile md:min-h-custom-tablet">
+    <section className="flex flex-col min-h-custom-height">
       <motion.div
-        className="flex-1 flex items-center justify-between space-x-4"
+        className="flex flex-1 items-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <div className="w-full md:w-4/5 flex flex-col space-y-5">
-          <span className="bg-green w-12 h-0.5"></span>
+        <div className="flex md:w-4/5 lg:w-1/2 flex-col space-y-10">
+          <motion.span
+            className="bg-green h-0.5"
+            initial={{ width: 0 }}
+            animate={{ width: '3rem' }}
+            transition={{ duration: 1 }}
+          ></motion.span>
           <h1 className="text-secondary font-bold tracking-wide text-5xl lg:text-7xl">
             Olá, meu nome é Matheus.
           </h1>
@@ -44,6 +38,15 @@ const Home: React.FC = () => {
             Sou bacharel em Ciência da Computação, apaixonado por tecnologia e
             por desenvolvimento web & mobile.
           </p>
+
+          <Link href="/about">
+            <motion.a
+              className="md:self-start cursor-pointer flex place-content-center bg-primary rounded py-4 px-8 text-white font-bold uppercase"
+              layoutId="about-button-card"
+            >
+              Mais detalhes
+            </motion.a>
+          </Link>
         </div>
         <div className="hidden md:block relative">
           <Image
@@ -59,54 +62,19 @@ const Home: React.FC = () => {
             animate="visible"
           >
             <motion.li
-              className="flex place-content-center rounded-full absolute top-32 left-80"
+              className="absolute top-3/4 left-3/4 rounded-full w-28 h-28 bg-tech-nodejs bg-no-repeat bg-contain bg-cover"
               variants={tech}
-            >
-              <Image src="/img/techs/react.svg" width={40} height={40} />
-            </motion.li>
+            ></motion.li>
             <motion.li
-              className="flex place-content-center rounded-full absolute top-6 left-4"
+              className="absolute top-1/4 left-3/4 rounded-full w-20 h-20 bg-tech-reactjs bg-no-repeat bg-cover"
               variants={tech}
-            >
-              <Image src="/img/techs/node.svg" width={55} height={62} />
-            </motion.li>
+            ></motion.li>
             <motion.li
-              className="flex place-content-center rounded-full absolute top-52 left-0"
+              className="absolute top-1/2 rounded-full w-28 h-28 bg-tech-typescript bg-no-repeat bg-cover"
               variants={tech}
-            >
-              <Image src="/img/techs/typescript.svg" width={45} height={45} />
-            </motion.li>
+            ></motion.li>
           </motion.ul>
         </div>
-      </motion.div>
-
-      <motion.div
-        className="flex-1 flex flex-col justify-around sm:flex-row sm:justify-between sm:items-center"
-        transition={{
-          delay: 2
-        }}
-        variants={pageAnchor}
-        initial="hidden"
-        animate="visible"
-      >
-        <PageAnchor
-          text="resumo"
-          href="/resume"
-          icon={FaUser}
-          layoutId="resume-title"
-        />
-        <PageAnchor
-          text="currículo"
-          href="/curriculum"
-          icon={FaClipboardList}
-          layoutId={'curriculum-title'}
-        />
-        <PageAnchor
-          text="skills"
-          href="/resume"
-          icon={FaLaptopCode}
-          layoutId={'skills-title'}
-        />
       </motion.div>
     </section>
   )
