@@ -40,7 +40,7 @@ const TechList: React.FC<TechsProps> = ({ techs }) => {
         {techsFiltered.map(tech => (
           <li
             key={tech}
-            className={`before:content after:content bg-tech-${tech} bg-cover w-12 h-12 transform ${
+            className={`bg-tech-${tech} bg-cover w-12 h-12 transform ${
               !toggleMoreTechs ? 'hover:-translate-y-2.5' : 'hover:scale-110'
             } transition-all duration-200`}
           ></li>
