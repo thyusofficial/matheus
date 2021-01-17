@@ -11,9 +11,9 @@ export const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 }
 
-// if (!firebase.apps.length) {
-firebase.initializeApp(firebaseConfig)
-// }
-const database = firebase.database()
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
+const database = process.browser ? firebase.database() : undefined
 
 export default database
