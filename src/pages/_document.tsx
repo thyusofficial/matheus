@@ -30,6 +30,12 @@ class MyDocument extends Document {
             content="initial-scale=1.0, width=device-width"
             key="viewport"
           />
+          <meta httpEquiv="x-ua-compatible" content="IE=edge,chrome=1"></meta>
+          <meta name="theme-color" content="#121214"></meta>
+          <meta
+            name="google-site-verification"
+            content="8DWed3M01OdncKl8OwUPrAc-9r87UGpK39i6bLXRxjo"
+          />
           <meta charSet="utf-8" />
           <link
             href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
