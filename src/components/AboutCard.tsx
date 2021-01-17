@@ -3,13 +3,13 @@ import React from 'react'
 interface AboutCardProps {
   title: string
   subtitle: string
-  period: string
-  intern?: boolean
-  description?: string
+  description: string
+  periodStart: string
+  periodEnd: string
 }
 
 const listItem: Variants = {
-  hidden: { x: -1280, opacity: 0 },
+  hidden: { x: '-100vw', opacity: 0 },
   visible: {
     x: 0,
     opacity: 1,
@@ -20,20 +20,18 @@ const AboutCard: React.FC<AboutCardProps> = ({
   title,
   subtitle,
   description,
-  period,
-  intern
+  periodStart,
+  periodEnd
 }) => {
   return (
     <motion.li
       className="flex flex-col space-y-4 bg-shape p-4 rounded tracking-wide"
       variants={listItem}
     >
-      <strong className="text-2xl text-white capitalize">{title}</strong>
-      <span className="text-white capitalize">
-        {subtitle} {intern && '- estágio'}
-      </span>
-      <time className="text-green capitalize" dateTime="2020-10">
-        {period}
+      <strong className="text-2xl text-white">{title}</strong>
+      <span className="text-white">{subtitle}</span>
+      <time className="text-green capitalize">
+        {periodStart} - {periodEnd || 'Atual'}
       </time>
       <p>{description}</p>
     </motion.li>

@@ -1,29 +1,102 @@
-import { motion, Variants } from 'framer-motion'
+import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import { parseISO, format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+
+import database from '../config/firebase'
 import Image from 'next/image'
-import React from 'react'
 import AboutCard from '../components/AboutCard'
-import TechList from '../components/TechList'
-import { techs } from '../utils/techList'
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import { motion, Variants } from 'framer-motion'
+
 const About: React.FC = () => {
+  const [techs, setTechs] = useState([])
+  const [professionalHistoric, setProfessionalHistoric] = useState([])
+  const [educationHistoric, setEducationHistoric] = useState([])
+  const [toggleMoreTechs, setToggleMoreTechs] = useState(false)
+
   const list: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
+        staggerChildren: 0.1,
         delayChildren: 0.2
       }
     }
   }
 
-  const listItemTitle: Variants = {
-    hidden: { x: -1280, opacity: 0 },
+  const listTitle: Variants = {
+    hidden: { x: '-100vw', opacity: 0 },
     visible: {
       x: 0,
       opacity: 1,
       transition: { stiffness: 100 }
     }
   }
+
+  const handleToggleTechs = useCallback(() => {
+    setToggleMoreTechs(!toggleMoreTechs)
+  }, [toggleMoreTechs])
+
+  const techsFiltered = useMemo(
+    () =>
+      !toggleMoreTechs
+        ? techs.filter(
+            ({ id }) =>
+              id === 'typescript' ||
+              id === 'javascript' ||
+              id === 'reactjs' ||
+              id === 'nodejs'
+          )
+        : [...techs],
+    [techs, toggleMoreTechs]
+  )
+
+  useEffect(() => {
+    const response = database.ref('/techs')
+
+    response.once('value', snapshot => {
+      setTechs(snapshot.val())
+    })
+  }, [])
+
+  useEffect(() => {
+    const response = database.ref('/professional')
+
+    response.once('value', snapshot => {
+      const professionalHistoricFormatted = snapshot.val().map(historic => ({
+        ...historic,
+        periodStart: format(parseISO(historic.period.start), 'MMMM yyyy', {
+          locale: ptBR
+        }),
+        periodEnd:
+          historic.period.end &&
+          format(parseISO(historic.period.end), 'MMMM yyyy', {
+            locale: ptBR
+          })
+      }))
+
+      setProfessionalHistoric(professionalHistoricFormatted)
+    })
+  }, [])
+  useEffect(() => {
+    const response = database.ref('/education')
+    response.once('value', snapshot => {
+      const educationlHistoricFormatted = snapshot.val().map(historic => ({
+        ...historic,
+        periodStart: format(parseISO(historic.period.start), 'MMMM yyyy', {
+          locale: ptBR
+        }),
+        periodEnd:
+          historic.period.end &&
+          format(parseISO(historic.period.end), 'MMMM yyyy', {
+            locale: ptBR
+          })
+      }))
+
+      setEducationHistoric(educationlHistoricFormatted)
+    })
+  }, [])
   return (
     <section className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 min-h-custom-height">
       <motion.aside
@@ -31,7 +104,7 @@ const About: React.FC = () => {
         layoutId="about-button-card"
         transition={{ duration: 0.5 }}
       >
-        <div className="self-center w-44 h-44 rounded-full">
+        <div className="self-center w-44 h-44">
           <Image
             src="/img/matheus.svg"
             alt="Matheus Cardoso"
@@ -55,60 +128,74 @@ const About: React.FC = () => {
           </a>
         </div>
         <span className="w-full h-0.5 bg-background my-4" />
-
-        <TechList techs={techs} />
+        <div className="flex flex-col items-center space-y-4">
+          <span>Skills</span>
+          <motion.ul
+            className={`${
+              !toggleMoreTechs
+                ? 'flex space-x-2'
+                : 'grid grid-cols-6 gap-2 md:grid-cols-5'
+            }`}
+            layout
+            transition={{ duration: 0.5 }}
+          >
+            {techsFiltered.map(tech => (
+              <li
+                key={tech.id}
+                className={`w-12 h-12 bg-cover transform transition-all duration-200 ${
+                  !toggleMoreTechs
+                    ? 'hover:-translate-y-2.5'
+                    : 'hover:scale-110'
+                } `}
+                style={{ backgroundImage: `url(${tech.imgUrl})` }}
+              />
+            ))}
+          </motion.ul>
+          <button
+            className="focus:outline-none"
+            type="button"
+            onClick={handleToggleTechs}
+          >
+            {!toggleMoreTechs ? <FaChevronDown /> : <FaChevronUp />}
+          </button>
+        </div>
       </motion.aside>
       <motion.ul
         className="w-full md:w-1/2 lg:w-3/5 flex flex-col space-y-4"
         initial="hidden"
-        animate="visible"
+        animate={
+          educationHistoric.length > 0 &&
+          professionalHistoric.length > 0 &&
+          'visible'
+        }
         variants={list}
       >
-        <motion.h1 className="text-4xl text-secondary" variants={listItemTitle}>
+        <motion.h1 className="text-4xl text-secondary" variants={listTitle}>
           Educação
         </motion.h1>
-        <AboutCard
-          title="bacharelado em Ciência da Computação"
-          subtitle="uniRitter"
-          period="Março 2015 &#8226; Setembro 2020"
-          description="Curso com foco na análise de necessidades de usuários e com a atenção voltada ao desenvolvimento de softwares e aplicativos, gerenciamento de equipes e outras atividades de tecnologia."
-        />
-        <AboutCard
-          title="bootcamp GoStack"
-          subtitle="rocketseat"
-          period="Outubro 2019 &#8226; Dezembro 2020"
-          description="Treinamento online, prático e intensivo, no formato de bootcamp utilizando tecnologias NodeJS, ReactJS e React Native, e todo o ecossistema ao redor dessas ferramentas, do zero ao deploy. Incluindo testes automatizados, integração contínua, publicação nas stores, e todas as bibliotecas e frameworks importantes."
-        />
-        <AboutCard
-          title="curso de inglês"
-          subtitle="espaço idiomas"
-          period="Outubro 2019 &#8226; Dezembro 2020"
-          description="Curso de língua inglesa."
-        />
-
-        <motion.h1 className="text-4xl text-secondary" variants={listItemTitle}>
+        {educationHistoric.map(education => (
+          <AboutCard
+            key={education.id}
+            title={education.title}
+            subtitle={education.subtitle}
+            periodStart={education.periodStart}
+            periodEnd={education.periodEnd}
+            description={education.description}
+          />
+        ))}
+        <motion.h1 className="text-4xl text-secondary" variants={listTitle}>
           Profissional
         </motion.h1>
-        <AboutCard
-          title="desenvolvedor"
-          subtitle="summit networks"
-          period="Outubro 2020 &#8226; Atual"
-          description="Desenvolvimento de software em Javascript/NodeJs para desktop e dispositivos móveis iOS e Android. Desenvolvimento frontend em React & React Native. Análise, identificação e correção de bugs e otimizações."
-        />
-        <AboutCard
-          title="desenvolvedor"
-          subtitle="bc serviços"
-          period="julho 2019 &#8226; março 2020"
-          description="Desenvolvimento full stack de software utilizando principalmente PHP, HTML, CSS e Javascript."
-          intern
-        />
-        <AboutCard
-          title="desenvolvedor"
-          subtitle="anapps"
-          period="abril 2019 &#8226; julho 2019"
-          description="Auxílio na análise e desenvolvimento de sistemas internos, modelagem de banco de dados e correção de bugs."
-          intern
-        />
+        {professionalHistoric.map(professional => (
+          <AboutCard
+            key={professional.id}
+            title={professional.title}
+            subtitle={professional.subtitle}
+            periodStart={professional.periodStart}
+            periodEnd={professional.periodEnd}
+            description={professional.description}
+          />
+        ))}
       </motion.ul>
     </section>
   )

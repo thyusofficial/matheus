@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 
           <Link href="/about">
             <motion.a
-              className="md:self-start cursor-pointer flex place-content-center bg-primary rounded py-4 px-8 text-white font-bold uppercase"
+              className="md:self-start cursor-pointer flex place-content-center bg-primary rounded py-4 px-8 text-white font-bold uppercase hover:bg-primary-hover"
               layoutId="about-button-card"
             >
               Mais detalhes
