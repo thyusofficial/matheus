@@ -14,6 +14,6 @@ export const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
-const database = process.browser ? firebase.database() : undefined
+const database = firebase.database()
 
 export default database
