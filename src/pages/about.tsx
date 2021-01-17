@@ -61,7 +61,7 @@ const About: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    const response = database.ref('/professional')
+    const response = database.ref('professional')
 
     response.once('value', snapshot => {
       const professionalHistoricFormatted = snapshot.val().map(historic => ({
@@ -80,7 +80,7 @@ const About: React.FC = () => {
     })
   }, [])
   useEffect(() => {
-    const response = database.ref('/education')
+    const response = database.ref('education')
     response.once('value', snapshot => {
       const educationlHistoricFormatted = snapshot.val().map(historic => ({
         ...historic,
