@@ -21,7 +21,15 @@ class MyDocument extends Document {
       <Html lang="pt">
         <Head>
           <link rel="icon" href="/favicon.ico" />
-
+          <meta
+            name="description"
+            content="Desenvolvedor e bacharel em Ciência da Computação"
+          />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+            key="viewport"
+          />
           <meta charSet="utf-8" />
           <link
             href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
