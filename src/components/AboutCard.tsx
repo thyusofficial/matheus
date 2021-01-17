@@ -31,7 +31,7 @@ const AboutCard: React.FC<AboutCardProps> = ({
       <strong className="text-2xl text-white">{title}</strong>
       <span className="text-white">{subtitle}</span>
       <time className="text-green capitalize">
-        {periodStart} - {periodEnd || 'Atual'}
+        {periodStart} &#8226; {periodEnd || 'Atual'}
       </time>
       <p>{description}</p>
     </motion.li>
