@@ -54,6 +54,7 @@ const Home: React.FC = () => {
             alt="Matheus Cardoso"
             width={600}
             height={478}
+            quality={100}
           />
           <motion.ul
             className="absolute w-full h-full inset-0"

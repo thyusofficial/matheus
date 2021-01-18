@@ -111,6 +111,7 @@ const About: React.FC = () => {
             width={156}
             height={156}
             className="rounded-full"
+            quality={100}
           />
         </div>
         <div className="flex flex-col items-center space-y-4 text-center">
