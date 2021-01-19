@@ -135,7 +135,7 @@ const About: React.FC = () => {
             className={`${
               !toggleMoreTechs
                 ? 'flex space-x-2'
-                : 'grid grid-cols-6 gap-2 md:grid-cols-5'
+                : 'grid grid-cols-5 gap-2 md:grid-cols-6'
             }`}
             layout
             transition={{ duration: 0.5 }}
